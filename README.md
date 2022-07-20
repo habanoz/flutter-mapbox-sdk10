@@ -1,4 +1,4 @@
-# maps10
+# Flutter Plugin for Mapbox SDK 10
 
 A Flutter plugin project for mapbox sdk version 10.
 
