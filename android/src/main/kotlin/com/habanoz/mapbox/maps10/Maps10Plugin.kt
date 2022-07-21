@@ -46,18 +46,18 @@ class Maps10Plugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        TODO("Not yet implemented")
+        print("attached to activity")
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
-        TODO("Not yet implemented")
+        onDetachedFromActivity()
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        TODO("Not yet implemented")
+        onAttachedToActivity(binding)
     }
 
     override fun onDetachedFromActivity() {
-        TODO("Not yet implemented")
+        print("detached from activity")
     }
 }
