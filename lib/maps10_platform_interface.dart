@@ -14,7 +14,7 @@ abstract class Maps10Platform extends PlatformInterface {
   ///
   /// Defaults to [MethodChannelMaps10].
   static Maps10Platform get instance => _instance;
-  
+
   /// Platform-specific implementations should set this with their own
   /// platform-specific class that extends [Maps10Platform] when
   /// they register themselves.
@@ -25,5 +25,17 @@ abstract class Maps10Platform extends PlatformInterface {
 
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<String?> loadStyleStreet() async {
+    throw UnimplementedError('loadStyleStreet() has not been implemented.');
+  }
+
+  Future<String?> loadStyleOutdoor() async {
+    throw UnimplementedError('loadStyleOutdoor() has not been implemented.');
+  }
+
+  Future<String?> loadStyleSatellite() async {
+    throw UnimplementedError('loadStyleSatellite() has not been implemented.');
   }
 }

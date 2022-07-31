@@ -6,9 +6,12 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:maps10/maps10.dart';
+import 'package:maps10_example/ui/ExpandableFab.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MaterialApp(
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -67,6 +70,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: buildMapView(context),
+      floatingActionButton: ExampleExpandableFab(_maps10Plugin),
+    );
+  }
+
+  Widget buildMapView(BuildContext context) {
     // This is used in the platform side to register the view.
     const String viewType = 'maps10';
     // Pass parameters to the platform side.
