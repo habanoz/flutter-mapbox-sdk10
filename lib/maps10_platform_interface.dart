@@ -27,6 +27,10 @@ abstract class Maps10Platform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
+  Future<String?> loadStyleUri(String uri) async {
+    throw UnimplementedError('loadStyleUri() has not been implemented.');
+  }
+
   Future<String?> loadStyleStreet() async {
     throw UnimplementedError('loadStyleStreet() has not been implemented.');
   }

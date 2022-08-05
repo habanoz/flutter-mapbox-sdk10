@@ -49,14 +49,20 @@ class Maps10Plugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         } else if (call.method == "loadStyleStreet") {
             nativeViewFactory.loadStyleURI(Style.MAPBOX_STREETS)
             result.success("Android ${android.os.Build.VERSION.RELEASE}")
-        }  else if (call.method == "loadStyleOutdoor") {
+        } else if (call.method == "loadStyleOutdoor") {
             nativeViewFactory.loadStyleURI(Style.OUTDOORS)
             result.success("Android ${android.os.Build.VERSION.RELEASE}")
-        }  else if (call.method == "loadStyleSatellite") {
+        } else if (call.method == "loadStyleSatellite") {
             nativeViewFactory.loadStyleURI(Style.SATELLITE)
             result.success("Android ${android.os.Build.VERSION.RELEASE}")
-        } 
-        else {
+        } else if (call.method == "loadStyleUri") {
+            val argumentList = call.arguments as List<String>
+            val uri = argumentList.get(0)
+            Log.w("maps10Plugin", "URI = %s".format(uri))
+
+            nativeViewFactory.loadStyle(uri)
+            result.success("Android ${android.os.Build.VERSION.RELEASE}")
+        } else {
             result.notImplemented()
         }
     }

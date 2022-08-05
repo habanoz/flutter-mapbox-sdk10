@@ -6,7 +6,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:maps10/maps10.dart';
-import 'package:maps10_example/ui/ExpandableFab.dart';
+
+import 'ui/MapStylePicker.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -72,7 +73,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: buildMapView(context),
-      floatingActionButton: ExampleExpandableFab(_maps10Plugin),
+      floatingActionButton: StylePickerFab(
+        platform: _maps10Plugin,
+      ),
     );
   }
 

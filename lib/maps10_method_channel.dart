@@ -17,6 +17,13 @@ class MethodChannelMaps10 extends Maps10Platform {
   }
 
   @override
+  Future<String?> loadStyleUri(String uri) async {
+    final version =
+        await methodChannel.invokeMethod<String>('loadStyleUri', [uri]);
+    return version;
+  }
+
+  @override
   Future<String?> loadStyleStreet() async {
     final version = await methodChannel.invokeMethod<String>('loadStyleStreet');
     return version;

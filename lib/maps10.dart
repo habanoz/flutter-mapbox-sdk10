@@ -16,4 +16,8 @@ class Maps10 {
   Future<String?> loadStyleStreet() {
     return Maps10Platform.instance.loadStyleStreet();
   }
+
+  Future<String?> loadStyleUri(String uri) {
+    return Maps10Platform.instance.loadStyleUri(uri);
+  }
 }

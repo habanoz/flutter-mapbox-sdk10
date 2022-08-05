@@ -44,6 +44,18 @@ class ExampleExpandableFab extends StatelessWidget {
           onPressed: () => platform.loadStyleStreet(),
           icon: const Icon(Icons.videocam),
         ),
+        ActionButton(
+          onPressed: () => platform.loadStyleStreet(),
+          icon: const Icon(Icons.videocam),
+        ),
+        ActionButton(
+          onPressed: () => platform.loadStyleStreet(),
+          icon: const Icon(Icons.videocam),
+        ),
+        ActionButton(
+          onPressed: () => platform.loadStyleStreet(),
+          icon: const Icon(Icons.videocam),
+        ),
       ],
     );
   }

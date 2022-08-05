@@ -2,12 +2,23 @@ package com.habanoz.mapbox.maps10
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.WindowInsets
+import androidx.core.view.OnApplyWindowInsetsListener
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import com.habanoz.mapbox.maps10.util.CampatUtils
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
+import com.mapbox.maps.plugin.Plugin
+import com.mapbox.maps.plugin.compass.CompassPlugin
+import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin
 import io.flutter.plugin.platform.PlatformView
 
 internal class NativeView(context: Context, id: Int, creationParams: Map<String?, Any?>?) :
@@ -31,7 +42,42 @@ internal class NativeView(context: Context, id: Int, creationParams: Map<String?
             }
         }
         )
+
         mapView.setBackgroundColor(Color.rgb(255, 100, 100))
+
+
+        val defaultMarginTop = 300.0f
+        val scaleBarPlugin = mapView.getPlugin<ScaleBarPlugin>(Plugin.MAPBOX_SCALEBAR_PLUGIN_ID)
+        scaleBarPlugin!!.marginTop = defaultMarginTop
+        scaleBarPlugin.position = Gravity.TOP
+
+        val compassPlugin = mapView.getPlugin<CompassPlugin>(Plugin.MAPBOX_COMPASS_PLUGIN_ID)
+        compassPlugin!!.marginTop = defaultMarginTop
+        compassPlugin.fadeWhenFacingNorth = true
+
+        mapView.setOnApplyWindowInsetsListener { view, insets ->
+            Log.w("nativeView","setOnApplyWindowInsetsListener called")
+            val height = CampatUtils.getStatusBarHeight(insets).toFloat()
+            scaleBarPlugin.marginTop = height
+            compassPlugin.marginTop = height
+
+            Log.w("nativeView","setOnApplyWindowInsetsListener Height %f".format(height))
+
+            insets
+        }
+
+        /*ViewCompat.setOnApplyWindowInsetsListener(mapView
+        ) { v, insets ->
+            val height = CampatUtils.getStatusBarHeightCompat(insets).toFloat()
+            scaleBarPlugin.marginTop = height
+            compassPlugin.marginTop = height
+
+            Log.w("nativeView","ViewCompat.setOnApplyWindowInsetsListener Height %f".format(height))
+
+            insets!!
+        }
+*/
+
     }
 
     private fun getMapOptions(context: Context): MapInitOptions {
@@ -47,7 +93,7 @@ internal class NativeView(context: Context, id: Int, creationParams: Map<String?
             )
             .build()
 
-        
+
         val resourceOptions = ResourceOptions.Builder().applyDefaultParams(context)
             .accessToken(context.getString(R.string.mapbox_access_token))
             .tileStoreUsageMode(TileStoreUsageMode.DISABLED)
@@ -73,4 +119,6 @@ internal class NativeView(context: Context, id: Int, creationParams: Map<String?
 
         return mapInitOptions
     }
+
+
 }
