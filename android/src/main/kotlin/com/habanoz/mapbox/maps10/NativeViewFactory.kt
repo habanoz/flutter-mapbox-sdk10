@@ -27,6 +27,9 @@ import com.mapbox.maps.extension.style.terrain.generated.terrain
     }
 
     fun loadStyle(uri: String): String{
+        // setting uri is the same
+        // mapViewRef?.getMapboxMap()?.getStyle()?.styleURI = uri
+        
         mapViewRef?.getMapboxMap()?.loadStyle(styleExtension = style(uri){
             +rasterDemSource("TERRAIN_SOURCE") {
                 url("mapbox://mapbox.mapbox-terrain-dem-v1")

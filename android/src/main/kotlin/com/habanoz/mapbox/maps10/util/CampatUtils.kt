@@ -8,8 +8,8 @@ object CampatUtils {
     fun getStatusBarHeight(insets: WindowInsets): Int {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            println("SDK R "+ insets.getInsets(WindowInsets.Type.statusBars()).top)
-            return insets.getInsets(WindowInsets.Type.systemBars()).top
+            println("SDK R "+ insets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars()).top)
+            return insets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars()).top
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             println("SDK M "+ insets.systemWindowInsetTop)
             //return insets.systemWindowInsetTop

@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowInsets
 import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
@@ -45,25 +46,59 @@ internal class NativeView(context: Context, id: Int, creationParams: Map<String?
 
         mapView.setBackgroundColor(Color.rgb(255, 100, 100))
 
+        mapView.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(p0: View?) {
+                val defaultMarginTop = ViewCompat.getRootWindowInsets(p0!!)?.getInsets(WindowInsetsCompat.Type.systemBars())?.top?.toFloat()!!
 
-        val defaultMarginTop = 300.0f
-        val scaleBarPlugin = mapView.getPlugin<ScaleBarPlugin>(Plugin.MAPBOX_SCALEBAR_PLUGIN_ID)
-        scaleBarPlugin!!.marginTop = defaultMarginTop
-        scaleBarPlugin.position = Gravity.TOP
+                val scaleBarPlugin = mapView.getPlugin<ScaleBarPlugin>(Plugin.MAPBOX_SCALEBAR_PLUGIN_ID)
+                scaleBarPlugin!!.marginTop = defaultMarginTop
+                scaleBarPlugin!!.position = Gravity.TOP
 
-        val compassPlugin = mapView.getPlugin<CompassPlugin>(Plugin.MAPBOX_COMPASS_PLUGIN_ID)
-        compassPlugin!!.marginTop = defaultMarginTop
-        compassPlugin.fadeWhenFacingNorth = true
+                val compassPlugin = mapView.getPlugin<CompassPlugin>(Plugin.MAPBOX_COMPASS_PLUGIN_ID)
+                compassPlugin!!.marginTop = defaultMarginTop
+                compassPlugin!!.fadeWhenFacingNorth = true
+            }
 
-        mapView.setOnApplyWindowInsetsListener { view, insets ->
-            Log.w("nativeView","setOnApplyWindowInsetsListener called")
+            override fun onViewDetachedFromWindow(p0: View?) {
+                TODO("Not yet implemented")
+            }
+        })
+
+    /*    mapView.setOnApplyWindowInsetsListener { view, insets ->
+            Log.w("nativeView", "setOnApplyWindowInsetsListener called")
             val height = CampatUtils.getStatusBarHeight(insets).toFloat()
             scaleBarPlugin.marginTop = height
             compassPlugin.marginTop = height
 
-            Log.w("nativeView","setOnApplyWindowInsetsListener Height %f".format(height))
+            Log.w("nativeView", "setOnApplyWindowInsetsListener Height %f".format(height))
 
             insets
+        }*/
+
+        ViewCompat.setOnApplyWindowInsetsListener(view) { view, windowInsets ->
+            val insets = windowInsets.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.systemBars())
+            // Apply the insets as a margin to the view. Here the system is setting
+            // only the bottom, left, and right dimensions, but apply whichever insets are
+            // appropriate to your layout. You can also update the view padding
+            // if that's more appropriate.
+
+            /*view.updateLayoutParams<ViewGroup.MarginLayoutParams>(
+                leftMargin = insets.left,
+                bottomMargin = insets.bottom,
+                rightMargin = insets.right,
+            )*/
+
+            Log.w("nativeView", "ViewCompat.setOnApplyWindowInsetsListener Height %d".format(insets.top))
+
+            val scaleBarPlugin = mapView.getPlugin<ScaleBarPlugin>(Plugin.MAPBOX_SCALEBAR_PLUGIN_ID)
+            val compassPlugin = mapView.getPlugin<CompassPlugin>(Plugin.MAPBOX_COMPASS_PLUGIN_ID)
+
+            scaleBarPlugin?.marginTop = insets.top.toFloat()
+            compassPlugin?.marginTop = insets.top.toFloat()
+
+            // Return CONSUMED if you don't want want the window insets to keep being
+            // passed down to descendant views.
+            WindowInsetsCompat.CONSUMED
         }
 
         /*ViewCompat.setOnApplyWindowInsetsListener(mapView
@@ -119,6 +154,4 @@ internal class NativeView(context: Context, id: Int, creationParams: Map<String?
 
         return mapInitOptions
     }
-
-
 }
