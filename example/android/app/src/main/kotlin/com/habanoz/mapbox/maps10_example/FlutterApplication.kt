@@ -3,14 +3,13 @@ package com.habanoz.mapbox.maps10_example
 import android.app.Application
 import android.util.Log
 import android.view.OrientationEventListener
-import android.widget.Toast
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
 
 
 class FlutterApplication : Application() {
-    lateinit var flutterEngine : FlutterEngine
+    lateinit var flutterEngine: FlutterEngine
 
     override fun onCreate() {
         super.onCreate()
@@ -33,19 +32,9 @@ class FlutterApplication : Application() {
         ) {
             override fun onOrientationChanged(orientation: Int) {
                 if (orientation == 0 || orientation == 180) {
-                    Toast.makeText(
-                        applicationContext, "portrait",
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    Log.w("FlutterApplication", "orientation portrait")
+                    Log.d("FlutterApplication", "orientation portrait")
                 } else if (orientation == 90 || orientation == 270) {
-                    Toast.makeText(
-                        applicationContext, "landscape",
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    Log.w("FlutterApplication", "orientation landscape")
+                    Log.d("FlutterApplication", "orientation landscape")
                 }
             }
         }

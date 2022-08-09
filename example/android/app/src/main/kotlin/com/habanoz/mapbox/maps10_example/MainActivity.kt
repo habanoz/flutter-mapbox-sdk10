@@ -3,12 +3,10 @@ package com.habanoz.mapbox.maps10_example
 import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
-import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentManager
 import io.flutter.Log
@@ -29,8 +27,7 @@ class MainActivity : AppCompatActivity() {
 
        WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        val windowInsetsController: WindowInsetsControllerCompat? =
-            ViewCompat.getWindowInsetsController(window.decorView)
+        val windowInsetsController: WindowInsetsControllerCompat? = ViewCompat.getWindowInsetsController(window.decorView)
        windowInsetsController?.isAppearanceLightNavigationBars = true
        windowInsetsController?.isAppearanceLightStatusBars = true
 
@@ -42,13 +39,11 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentManager: FragmentManager = supportFragmentManager
 
-        flutterFragment =
-            fragmentManager.findFragmentByTag(TAG_FLUTTER_FRAGMENT) as FlutterFragment?
+        flutterFragment = fragmentManager.findFragmentByTag(TAG_FLUTTER_FRAGMENT) as FlutterFragment?
 
         if (flutterFragment == null) {
             // var newFlutterFragment = FlutterFragment.createDefault()
-            val newFlutterFragment: FlutterFragment =
-                FlutterFragment.withCachedEngine("my_engine_id").build();
+            val newFlutterFragment: FlutterFragment = FlutterFragment.withCachedEngine("my_engine_id").build();
             flutterFragment = newFlutterFragment
             fragmentManager
                 .beginTransaction()

@@ -28,7 +28,7 @@ class Maps10Plugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.flutterEngine.dartExecutor, "maps10")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "maps10")
         channel.setMethodCallHandler(this)
 
         val context = flutterPluginBinding.applicationContext
